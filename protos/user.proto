@@ -1,0 +1,39 @@
+syntax ="proto3";
+
+package  models;
+option go_package = "../common/models";
+
+enum UserGender {
+    UNDEFINED = 0;
+    MALE= 1 ;
+    FEMALE = 2 ;
+}
+
+message User{
+    int64 id = 1;
+    string name = 2;
+    string age = 3;
+    string password = 4;
+    UserGender gender =5;
+}
+
+message UserWithoutPassword{
+    int64 id = 1;
+    string name = 2;
+    string age = 3;
+    UserGender gender =4;
+}
+
+message UserId {
+    string id = 1;
+}
+
+message UserList{
+    repeated UserWithoutPassword list = 1;
+}
+
+import "google/protobuf/Empty.proto";
+service Users{
+    rpc Register(User) returns (UserWithoutPassword){}
+    rpc List(google.protobuf.Empty) returns (UserList){} 
+}
